@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<h1>Local Storage, Session Storage, and Cookies in JavaScript</h1>
+
+<p>
+  Modern web development often requires client-side persistence: storing and retrieving data in the browser, across sessions or tabs, or just for temporary state. The three main tools for this are <b>localStorage</b>, <b>sessionStorage</b>, and <b>cookies</b>.
+</p>
+
+<hr>
+
+<h2>1. <code>localStorage</code></h2>
+<p>
+  <b>localStorage</b> is a key-value storage mechanism available in almost all browsers. Data stored here:
+  <ul>
+    <li>Persists even after closing the browser/tab.</li>
+    <li>Is only accessible by scripts from the same origin.</li>
+    <li>Is NOT sent to the server on each HTTP request.</li>
+    <li>Limit: ~5-10 MB (way more than cookies).</li>
+  </ul>
+</p>
+<pre><code>// Save data
+localStorage.setItem('theme', 'dark');
+// Load data
+const theme = localStorage.getItem('theme');
+// Remove data
+localStorage.removeItem('theme');
+// Clear all
+localStorage.clear();
+</code></pre>
+<p><b>Best for:</b> User preferences (theme, language), app state, offline data, shopping carts, drafts, caching API data, etc.</p>
+
+<hr>
+
+<h2>2. <code>sessionStorage</code></h2>
+<p>
+  <b>sessionStorage</b> is nearly identical to <code>localStorage</code> except:
+  <ul>
+    <li>Data only persists as long as the <b>tab or window</b> is open.</li>
+    <li>Closing the tab/window wipes it out.</li>
+    <li>Different tabs <b>do not share</b> sessionStorage, even for the same site.</li>
+  </ul>
+</p>
+<pre><code>// Save data
+sessionStorage.setItem('sessionID', '12345');
+// Load data
+const sessionID = sessionStorage.getItem('sessionID');
+// Remove data
+sessionStorage.removeItem('sessionID');
+</code></pre>
+<p><b>Best for:</b> Temporary state, forms data (preventing loss on accidental navigation), wizards/steps, temporary tokens, etc.</p>
+
+<hr>
+
+<h2>3. Cookies (<code>document.cookie</code>)</h2>
+<p>
+  <b>Cookies</b> are name-value pairs stored both in the browser and (optionally) sent with every request to a server (for this origin/path/domain). Unique features:
+  <ul>
+    <li>Automatically included in HTTP(S) requests by the browser (unlike localStorage/sessionStorage).</li>
+    <li>Small size (~4KB per cookie; number and total size limits per domain).</li>
+    <li>Attributes: <b>expires</b> (expiry date), <b>max-age</b>, <b>secure</b>, <b>SameSite</b>, <b>path</b>, <b>HttpOnly*</b>.</li>
+    <li><b>HttpOnly</b> cookies not accessible via JS (good for security for session/auth tokens).</li>
+    <li>Best for: <b>authentication/session IDs</b>, analytics, tracking, remembering login status, cross-page/server data.</li>
+    <li>Must use <code>document.cookie</code> API (awkward!) for set/read via JS.</li>
+  </ul>
+</p>
+<pre><code>// Set a cookie (expires in 7 days)
+document.cookie = "userId=abc123; path=/; max-age=" + 7*24*60*60;
+// Read all (as a string, must parse)
+console.log(document.cookie); // "userId=abc123; theme=dark"
+// JS cannot set HttpOnly cookies
+</code></pre>
+<p>
+  <b>Reminder:</b> Do not store <b>sensitive data</b> in localStorage/sessionStorage as JS is always accessible to XSS. Use cookies with <b>HttpOnly</b> and <b>Secure</b> flags for server-side auth session ids.
+</p>
+
+
+<hr>
+
+<h2>Best Real-World Project Example: Powerful Login, Theme, and Cart System</h2>
+<p>
+  Imagine a large e-commerce web app:
+</p>
+<ul>
+  <li><b>Authentication/Session (Cookies):</b> When users log in, server sets a <code>Set-Cookie: sessionid=...</code> header. App uses HttpOnly + Secure + SameSite cookies for session management. User stays logged in across all tabs and page reloads because browser sends the cookie with every request.</li>
+  <li><b>User Preferences (localStorage):</b> User picks "dark theme". App stores <code>localStorage.setItem('theme', 'dark')</code>. On every load, JS reads it and updates UI instantly, even if user returns days later.</li>
+  <li><b>Shopping Cart (localStorage or sessionStorage):</b> The cart contents are written to <code>localStorage</code> (so they persist forever if user is not logged in) or <code>sessionStorage</code> (if you want the cart wiped when tab closes). This way, items remain in the cart if the user closes and reopens the browser/tab.</li>
+</ul>
+
+<div style="background:#f9f9f9; padding:10px; margin-bottom:16px;">
+  <b>Example scenario:</b><br>
+  - You visit <code>shop.com</code> and add items to the cart. Cart lives in <code>localStorage</code>.<br>
+  - You choose "dark mode"; it's stored in <code>localStorage</code>.<br>
+  - You log in; server sets <code>sessionid</code> in an HttpOnly, Secure cookie.<br>
+  - You reload/come back days later: cart and theme preference remain, and if your session cookie is still valid, you are logged in.<br>
+</div>
+
+<hr>
+
+<h2>Practical Example (Demo Code)</h2>
+<p>Below: Shows reading/writing preferences and cart info with localStorage/sessionStorage, and shows how to read/write simple cookies.</p>
+<div style="background:#eef;border:1px solid #ccd;padding:15px;margin:12px 0;">
+  <button id="set-theme">Set Dark Theme</button>
+  <button id="get-theme">Show Theme</button>
+  <button id="add-cart">Add item to Cart</button>
+  <button id="show-cart">Show Cart</button>
+  <button id="set-cookie">Set Cookie</button>
+  <button id="show-cookie">Show Cookies</button>
+  <div id="output" style="margin-top:10px;white-space:pre-line;"></div>
+</div>
+
+<script src="main.js"></script>
+
+<hr>
+<details>
+  <summary><b>Tips & Best Practices</b></summary>
+  <ul>
+    <li>Avoid storing sensitive info (tokens, passwords, PII) in localStorage/sessionStorage!</li>
+    <li>Always use <b>HttpOnly</b>, <b>Secure</b>, <b>SameSite</b> flags for auth cookies (set them from server-side).</li>
+    <li>Keep cookies as small as possible; they slow down every user request.</li>
+    <li>For larger or more complex client-side data, use <code>localStorage</code> or <code>IndexedDB</code> (for huge/structured data).</li>
+    <li>Consider how your app should behave for privacy (GDPR!): get consent for cookies & storage if needed.</li>
+    <li>Remember: closing all tabs ends sessionStorage, reloading the page does not.</li>
+  </ul>
+</details>
+</body>
+</html>

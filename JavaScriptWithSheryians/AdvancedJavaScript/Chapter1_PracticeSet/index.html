@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Practice Set</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <!-- Toaster notification container -->
+    <div id="toaster" class="hidden fixed top-4 right-4 z-50">
+      <!-- Toasts will be injected here -->
+    </div>
+    <button
+      onclick="showToast('This is a success message!', 'success')"
+      class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+    >Show Success Toast</button>
+    <button
+      onclick="showToast('This is an error message!', 'error')"
+      class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition ml-2"
+    >Show Error Toast</button>
+
+    <script src="script.js"></script>
+</body>
+</html>
