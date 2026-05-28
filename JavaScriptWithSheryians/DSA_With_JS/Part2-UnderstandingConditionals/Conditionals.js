@@ -79,3 +79,69 @@
 //  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
 
 // Practice No 4 (INR Denominations)
+
+// let amount = 6324
+// if (amount >= 1000) {
+//   console.log('1000 notes: ' + Math.floor(amount / 1000))
+//   amount = amount % 1000
+// }
+// if (amount >= 200) {
+//   console.log('200 notes: ' + Math.floor(amount / 200))
+//   amount = amount % 200
+// }
+// if (amount >= 100) {
+//   console.log('100 notes: ' + Math.floor(amount / 100))
+//   amount = amount % 100
+// }
+// if (amount >= 50) {
+//   console.log('50 notes: ' + Math.floor(amount / 50))
+//   amount = amount % 50
+// }
+// if (amount >= 20) {
+//   console.log('20 notes: ' + Math.floor(amount / 20))
+//   amount = amount % 20
+// }
+// if (amount >= 5) {
+//   console.log('5 notes: ' + Math.floor(amount / 5))
+//   amount = amount % 5
+// }
+// if (amount >= 2) {
+//   console.log('2 notes: ' + Math.floor(amount / 2))
+//   amount = amount % 2
+// }
+// if (amount === 1) {
+//   console.log('1 notes: ' + amount)
+// }
+
+// console.log(amount)
+
+//  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
+
+// Practice No 5 - Nested ternary operator
+// let num = 0
+// console.log(num > 0 ? 'positive' : num < 0 ? 'negative' : 'zero')
+
+//  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
+
+// switch (true) {
+//   case 19 > 6:
+//     console.log('Hello')
+//     break
+//   case 10 > 9:
+//     console.log('Hey')
+//     break
+//   default:
+//     console.log('Invalid')
+// }
+
+let num = 0.1 + 0.2
+switch (num) {
+  case 0.3:
+    console.log('Hello')
+    break
+  case 0.5:
+    console.log('Hey')
+    break
+  default:
+    console.log('HI')
+}
