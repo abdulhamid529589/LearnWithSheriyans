@@ -1,3 +1,5 @@
+// let prompt = require('prompt-sync')()
+
 // Valid but infinite
 
 // for (let i = 0; i <= 10; ) {
@@ -198,9 +200,9 @@
 // }
 
 //  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
-//  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
+// //  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
 
-// Problem No 6 - Strong Number
+// // Problem No 6 - Strong Number
 
 // let pr = prompt('Enter your number: ') // user will give a number for adding n natural numbers
 
@@ -208,16 +210,64 @@
 // if (pr === null) {
 //   console.log('Cancelled')
 // } else {
-//   var ans = Number(pr)
-//   if (isNaN(ans)) {
+//   var userInp = Number(pr)
+//   if (isNaN(userInp)) {
 //     console.log('Invalid input')
 //   } else {
-//     if (ans > 0) {
-//
+//     if (userInp > 0) {
+//       var sum = 0
+//       var copy = userInp
+//       while (userInp > 0) {
+//         var rem = userInp % 10
+//         var fact = 1
+//         for (var i = 1; i <= rem; i++) {
+//           fact *= i
+//         }
+//         sum = sum + fact
+//         userInp = Math.floor(userInp / 10)
+//       }
+//       if (copy === sum) {
+//         console.log('Strong')
+//       } else {
+//         console.log('Not Strong')
+//       }
 //     } else {
 //       console.log('Should be +ve and more that 0')
 //     }
 //   }
 // }
 
-//  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
+// //  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
+// //  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
+
+// 7. Problem: Guess the Number Game
+
+let random = Math.floor(Math.random() * 100) + 1
+
+// console.log(random)
+
+let guess = 0
+
+// let attempts = 0
+
+while (guess !== random) {
+  guess = Number(prompt('Guess the number between 1-100: '))
+  if (isNaN(guess) || guess < 1 || guess > 100) {
+    console.log('Try again b/w 1 - 100')
+    continue
+  }
+  //   if (attempts < 5) {
+  //     attempts++
+  //   } else {
+  //     console.log('Gave over')
+  //   }
+  if (guess > random) {
+    console.log('too high , try again')
+  } else if (guess < random) {
+    console.log('too low, try again')
+  } else {
+    console.log('Congrats and number was: ', guess)
+  }
+}
+
+// //  ~~~~~~~~~~~~~~~~~~~*******~~~~~~~~~~~~~~~~~~~
